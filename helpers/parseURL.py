@@ -10,25 +10,38 @@ def checkType(string: str) -> (str, str):
     subtype: str = splited.split('/')[1]
     return (type, subtype)
 
+def getSize(url: str) -> str:
+    return requests.get(url, stream=True).headers['Content-length']
+
 def byPasser():
     pass
 
-def parseDL(content: str):
+def parseDL(content: str) -> list:
     script: str = re.search(r"var ytInitialPlayerResponse = ({.*?});", content).group(1)
 
     loaded: json = json.loads(script)
     data: json = loaded["streamingData"]["adaptiveFormats"]
 
+    files = []
+
     for i in data:
-        if checkType(i["mimeType"])[0] == "video":
-            print(str(i['width']) + " -> " + i["url"])
-        else:
-            print(i["url"])
+        j = {}
+        type = checkType(i["mimeType"])
+        j['url'] = i['url']
+        j['size'] = getSize(i['url'])
+        j['type'] = type[1]
+        if type[0] == "video":           
+            j['width'] = str(i['width'])
+        files.append(j)
+    
+    return files
 
 def parseURL(url):
     res = requests.get(url, headers={'User-Agent': user_agent})
     content = res.content.decode()
-    parseDL(content)
+    files = parseDL(content)
+
+    print(files)
 
 
 #parseURL('https://www.youtube.com/watch?v=Tc0M68TlBqc')
