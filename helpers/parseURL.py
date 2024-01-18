@@ -13,6 +13,16 @@ def checkType(string: str) -> (str, str):
 def getSize(url: str) -> str:
     return requests.get(url, stream=True).headers['Content-length']
 
+def getTitle(content: str) -> str:
+    return re.search(r"<title[\s\n]*>[\s\n]*(.*)[\s\n]*</title[\s\n]*>", content).group(1)[:-10]
+
+def getChannel(content: str) -> str:
+    return re.search(r"<link itemprop=\"name\" content=\"(.*?)\">", content).group(1)
+
+def getThumbnail(url: str) -> str:
+    video_id = url.split('?v=')[1]
+    return f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg"
+
 def byPasser():
     pass
 
@@ -36,13 +46,23 @@ def parseDL(content: str) -> list:
     
     return files
 
-def parseURL(url):
+def parseURL(url: str) -> dict:
     res = requests.get(url, headers={'User-Agent': user_agent})
     content = res.content.decode()
     files = parseDL(content)
+    title = getTitle(content)
+    channel = getChannel(content)
+    thumbail = getThumbnail(url)
 
-    print(files)
+    data = {
+        'title': title,
+        'channel': channel,
+        'files': files,
+        'thumbail': thumbail
+    }
 
+    return data
 
-#parseURL('https://www.youtube.com/watch?v=Tc0M68TlBqc')
-parseURL('https://www.youtube.com/watch?v=kplNazHyHt4')
+if __name__ == "__main__":
+    import sys
+    sys.exit("This is a module, not a script")
