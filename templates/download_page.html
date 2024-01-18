@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<div class="relative w-full bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 md:w-[400px] lg:w-[700px]">
+    <div class="flex gap-x-3">
+      <img src="https://picsum.photos/200/300" alt="" class="h-[125px] w-[125px] rounded-xl object-cover" />
+      <div>
+        <h2 class="py-4 text-xl font-medium">SRAET FO SSET</h2>
+        <p class="font-medium text-gray-700">WER</p>
+      </div>
+    </div>
+
+    <section class="pt-8">
+      <p class="text-xl font-medium">Available Videos</p>
+      <div class="flex items-center justify-between my-3">
+        <p class="text-lg font-medium text-gray-900">360p</p>
+        <button class="rounded-lg bg-gray-300 px-3 py-2 font-medium hover:bg-gray-400 hover:text-gray-800">Download</button>
+      </div>
+      <div class="flex items-center justify-between my-3">
+        <p class="text-lg font-medium text-gray-900">360p</p>
+        <button class="rounded-lg bg-gray-300 px-3 py-2 font-medium hover:bg-gray-400 hover:text-gray-800">Download</button>
+      </div>
+    </section>
+</div>
+{% endblock body %}
