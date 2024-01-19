@@ -1,6 +1,6 @@
 import re, requests
 import json
-import pprint
+import humanize
 
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/121.0"
 
@@ -11,7 +11,8 @@ def checkType(string: str) -> (str, str):
     return (type, subtype)
 
 def getSize(url: str) -> str:
-    return requests.get(url, stream=True).headers['Content-length']
+    num = requests.get(url, stream=True).headers['Content-length']
+    return humanize.naturalsize(num)
 
 def getTitle(content: str) -> str:
     return re.search(r"<title[\s\n]*>[\s\n]*(.*)[\s\n]*</title[\s\n]*>", content).group(1)[:-10]
@@ -31,7 +32,6 @@ def parseDL(content: str) -> list:
 
     loaded: json = json.loads(script)
     data: json = loaded["streamingData"]["adaptiveFormats"]
-
     files = []
 
     for i in data:
@@ -40,8 +40,10 @@ def parseDL(content: str) -> list:
         j['url'] = i['url']
         j['size'] = getSize(i['url'])
         j['type'] = type[1]
-        if type[0] == "video":           
-            j['width'] = str(i['width'])
+        if type[0] != "video":
+            j['quality'] = i['audioQuality']
+        else:
+            j['quality'] = i['qualityLabel']
         files.append(j)
     
     return files
