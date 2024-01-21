@@ -14,16 +14,19 @@ parser.add_argument('-v', dest='verbose', action='store_true',
 args = parser.parse_args()
 
 def progess_bar(current, total):
-    bar_length = 25
-    percent = float(current) / float(total)
-    hashes = '#' * int(round(percent * bar_length))
-    spaces ='_' * (bar_length - len(hashes))
-    sys.stdout.write(f'\r{current}/{total} bytes   [{hashes}{spaces}] {int(round(percent * 100))}%')
+    percent = current / total * 100
+    bar_size = 20
+    bar = '#' * int(round(percent / 100 * bar_size))
+    empty ='_' * (bar_size - len(bar))
+    sys.stdout.write(f'\r{humanize.naturalsize(current)}\{humanize.naturalsize(total)} [{bar}{empty}] {int(round(percent))}% completed')
     sys.stdout.flush()
 
 def main(): 
     data = parseURL(args.url)
-    print("Video", data['title'])
+    print("========================================")
+    print("[+] Video", data['title'])
+    print("[+] Channel", data['channel'])
+    print("========================================")
 
     key = 0
     for i in data['files']:
@@ -35,12 +38,22 @@ def main():
     response = requests.get(file['url'], stream=True)
 
     total = int(response.headers['Content-length'])
-    current = 0
-    with open(f"{data['title']}.{file['type']}", "wb") as handle:
-        for data in response.iter_content(chunk_size=1024):
-            progess_bar(current, total)
-            handle.write(data)
-            current += 1024
+
+    if args.output:
+        title = args.output
+    else:
+        title = data['title'] + '.' + file['type']
+
+    if args.verbose:
+        print(f'[+] Downloading {title}...')
+    
+        with open(title, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:
+                    f.write(chunk)
+                    f.flush()
+                    progess_bar(f.tell(), total)
+    
 
 if __name__ == "__main__":
     main()
