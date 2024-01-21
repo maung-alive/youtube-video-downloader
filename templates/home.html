@@ -3,10 +3,12 @@
 {% block body %}
     <div class="relative w-full bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 md:w-[400px] lg:w-[700px]">
       <form action="/download" method="post" class="w-full px-2">
-        <h3 class="pb-10 text-center text-lg">Youtube Easier Parser</h3>
+        <h3 class="pb-10 text-center text-3xl font-shadows-into">Youtube Easier Parser</h3>
         <div class="relative">
-          <span class="absolute left-3 top-1/2 -translate-y-1/2">M</span>
-          <input type="text" name="url" class="w-full rounded-xl bg-slate-100 py-2 pl-8 pr-3 text-lg duration-100 focus:shadow-lg focus:outline-none focus:ring-1 focus:ring-gray-900/5" />
+          <span class="absolute left-3 top-1/2 -translate-y-1/2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -25 100 100" width="50" height="50" id="video"><path fill="none" d="M0 0h48v48H0z"></path><path d="M8 12H4v28c0 2.21 1.79 4 4 4h28v-4H8V12zm32-8H16c-2.21 0-4 1.79-4 4v24c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4V8c0-2.21-1.79-4-4-4zM24 29V11l12 9-12 9z"></path></svg>
+          </span>
+          <input type="text" name="url" class="w-full rounded-xl bg-slate-100 py-2 pl-10 pr-3 text-lg duration-100 focus:shadow-lg focus:outline-none focus:ring-1 focus:ring-gray-900/5" />
         </div>
         <button type="submit" class="mx-auto mb-2 mt-12 block min-w-[246px] rounded-xl bg-green-400 py-3 font-medium text-white duration-100 hover:bg-green-600 hover:ring-2 active:text-gray-400">Download</button>
       </form>

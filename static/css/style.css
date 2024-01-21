@@ -898,3 +898,18 @@ video {
     width: 700px
   }
 }
+
+.pl-10{
+  padding-left: 2.5rem
+}
+
+.font-shadows-into {
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem
+}
