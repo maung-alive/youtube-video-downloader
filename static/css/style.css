@@ -913,3 +913,27 @@ video {
   font-size: 1.875rem;
   line-height: 2.25rem
 }
+
+
+.h-5{
+  height: 1.25rem
+}
+
+.w-5{
+  width: 1.25rem
+}
+
+@keyframes spin{
+  to{
+    transform: rotate(360deg)
+  }
+}
+
+.animate-spin{
+  animation: spin 1s linear infinite
+}
+
+.inline{
+  display: inline
+}
+
